@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
-import data from './api/multipleChoice.json'
 import './App.css';
+import data from './api/multipleChoice.json'
+import Question from './components/Question';
+import SubQuestion from './components/SubQuestion';
 
 function App() {
   const questions = [...data.options ]
@@ -8,26 +10,16 @@ function App() {
   const [qNum, setQNum] = useState(0)
 
 
-  function DisplayQuestion({questions, qNum}){
-    return(<h1 className="question">{ questions[qNum].question }</h1>)
-  }
-
   function handelClick(i){
     console.log(i)
     console.log(questions[qNum].correctAnswerID)
-    if(i == questions[qNum].correctAnswerID){
+    if(Number(i) === Number(questions[qNum].correctAnswerID)){
       setScore(score + 1)
     }
-    setQNum(qNum < questions.length-1 ? qNum + 1 : qNum)
+    setQNum(qNum < questions.length ? qNum + 1 : qNum)
   }
 
-
-  function DisplaySubQuestion({questions, qNum}){
-    return(<h2 className="subQuestion">{ questions[qNum].subQuestion }</h2>)
-  }
-
-
-  function DisplayButton({questions, qNum}){
+  function Button({questions, qNum}){
 
     const btn = questions[qNum].answers.map((i, index) => (
 
@@ -39,15 +31,15 @@ function App() {
 
   return (
     <div className="App">
-      <br />{qNum < questions.length-1 
+      <br />{qNum < questions.length 
       ? <>
-        <h1>Score: {score}</h1>
-        <DisplayQuestion questions={questions} qNum={qNum} />
-        <DisplaySubQuestion questions={questions} qNum={qNum} />
-        <DisplayButton questions={questions} qNum={qNum} />
+        <h1>Current Score: {score}</h1>
+        <Question questions={questions} qNum={qNum} />
+        <SubQuestion questions={questions} qNum={qNum} />
+        <Button questions={questions} qNum={qNum} />
         </>
       : <>
-        <h1 className="finalScore">Score: {score}</h1>
+        <h1 className="finalScore">Final Score: {score}</h1>
       </>
       }     
     </div>

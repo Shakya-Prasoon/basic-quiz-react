@@ -7,11 +7,15 @@ import SubQuestion from './components/SubQuestion';
 
 
 function App() {
-  const questions = [...data.options ]
+  // makes a deep copy of options object from data Array
+  const questions = [...data.options]
+  // holds the answer of all the question in an array
   const answer = questions.map((i) => {
     return i.correctAnswerID
   })
+  // initialized an empty array to hold the answerId that the user chooses
   const [score, setScore] = useState([])
+  // initialized qNum with 0 which holds the question number to be used for some particular purpose
   const [qNum, setQNum] = useState(0)
 
   // Updates the score array with the id of the answer selected by the user
@@ -31,11 +35,10 @@ function App() {
 
   // Computes the final score and returns the value
   function Score(){
+    // Initializes the finalScore with 0
     let finalScore = 0
-    console.log(answer)
-    console.log(score)
-
     for(let i= 0; i < answer.length;i++){
+      // Increment the value of finalScore by 1 if the answerId matches
       if(answer[i] === score[i]){
         finalScore++
       }

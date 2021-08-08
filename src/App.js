@@ -3,7 +3,7 @@ import './App.css';
 import data from './api/multipleChoice.json'
 import Question from './components/Question';
 import SubQuestion from './components/SubQuestion';
-
+import Score from './components/Score';
 
 
 function App() {
@@ -33,18 +33,6 @@ function App() {
     return btn
   }
 
-  // Computes the final score and returns the value
-  function Score(){
-    // Initializes the finalScore with 0
-    let finalScore = 0
-    for(let i= 0; i < answer.length;i++){
-      // Increment the value of finalScore by 1 if the answerId matches
-      if(answer[i] === score[i]){
-        finalScore++
-      }
-    }
-    return finalScore
-  }
 
 
   return (
@@ -55,11 +43,16 @@ function App() {
         <SubQuestion questions={questions} qNum={qNum} />
         <Button questions={questions} qNum={qNum} />
         <br />
-        <button className="next-prev" onClick={() => setQNum(qNum + 1) }>Next</button> 
-        <button className="next-prev" disabled={qNum === 0? true : false} onClick={() => setQNum(qNum - 1)}>Go Back</button>   
+        <button
+          className="next-prev" 
+          onClick={() => setQNum(qNum + 1) }>Next</button> 
+        <button 
+          className="next-prev" 
+          disabled={qNum === 0? true : false} 
+          onClick={() => setQNum(qNum - 1)}>Go Back</button>   
         </>
       : 
-        <h1 className="finalScore">Score: <Score /></h1>
+        <Score answer={answer} score={score}/>
       }   
     </div>
   );

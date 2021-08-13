@@ -17,18 +17,28 @@ function App() {
   const [score, setScore] = useState([])
   // initialized qNum with 0 which holds the question number to be used for some particular purpose
   const [qNum, setQNum] = useState(0)
+  const [selected, setSelected] = useState([])
+
+  const defaultColor= "#F3CA40"
+  const selectedColor ="#F2A541"
 
   // Updates the score array with the id of the answer selected by the user
-  function handelAnswerClick(id){
+  function handelAnswerClick(id, qNum){
+    const copySelected = [...selected]
+    copySelected[qNum] = Number(id)
+    setSelected([...copySelected])
     let copyScore = [...score]
     copyScore[qNum] = Number(id)
     setScore([...copyScore])
   }
 
+  // console.log("answer arr: ", selected)
   // Returns a basic button with an onClick function which would update the score Array with chosen answer
   function Button({questions, qNum}){
-    const btn = questions[qNum].answers.map((i, index) => (
-      <button onClick={() => handelAnswerClick(i.id)} key={index}>{i.answer}</button>
+    const btn = questions[qNum].answers.map((i, index) => (<button 
+        style={{backgroundColor: `${selected[qNum] === index+1? defaultColor : selectedColor}`}} 
+        onClick={(e) => handelAnswerClick(i.id, qNum)} 
+        key={index}>{i.answer}</button>
     ))
     return btn
   }
